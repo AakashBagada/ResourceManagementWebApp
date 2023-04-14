@@ -11,7 +11,7 @@
 
 
 <form action="authenticationController" method="post">
-Email:<input type="email" name="adminEamil">
+Email:<input type="email" name="adminEmail">
 password:<input type="password" name="adminPass">
          <input type="submit" value="submit">
          ${error}
