@@ -1,0 +1,36 @@
+html
+{
+	border:0px;
+	margin:0px;
+}
+
+.col-md-3,.col-md-9
+{
+	padding: 30px 30px;
+}
+.cool
+{
+	background-color:#8ef3d8;
+}
+
+.logo_text_design
+{
+	font-size: 20px;
+	font-weight: bold;
+	color: black;
+}
+.herf_link_design
+{
+	color:black;
+	text-decoration: none;
+}
+.herf_link_design:hover
+{
+	color:white;
+	text-decoration: underline;
+}
+
+.col-md-12
+{
+    padding: 30px 30px;	
+}

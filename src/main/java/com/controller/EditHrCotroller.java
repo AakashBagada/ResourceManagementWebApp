@@ -8,12 +8,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/Edit")
+import com.bean.HrBean;
+import com.dao.adminDao;
+
+@WebServlet("/editHr")
 public class EditHrCotroller extends HttpServlet {
- 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	
-    }
-	
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Integer userId = Integer.parseInt(req.getParameter("id"));
+
+		HrBean user = new adminDao().getUserById(userId);
+
+		req.setAttribute("user", user);
+
+		req.getRequestDispatcher("EditHR.jsp").forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Integer id = Integer.valueOf(request.getParameter("id"));
+		String firstName = (String) request.getParameter("firstName");
+		String lastName = (String) request.getParameter("lastName");
+		String emailId = (String) request.getParameter("emailId");
+		String password = (String) request.getParameter("password");
+		String gender = (String) request.getParameter("gender");
+		String number = (String) request.getParameter("number");
+		String date = (String) request.getParameter("date");
+
+		HrBean user = new HrBean();
+		user.setHrId(id);
+		user.setHrFirstName(firstName);
+		user.setHrLastName(lastName);
+		user.setHrEmail(emailId);
+		user.setHrPassword(password);
+		user.setHrGender(gender);
+		user.setHrContact(number);
+		user.setHrJoinDate(date);
+
+		new adminDao().UpdateUser(user);
+
+		response.sendRedirect("ListHrController");
+	}
+
 }

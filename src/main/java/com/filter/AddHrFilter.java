@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 import com.bean.HrBean;
+
 @WebFilter("/AddHr")
 public class AddHrFilter implements Filter {
 
@@ -26,8 +27,8 @@ public class AddHrFilter implements Filter {
 		String lastName = request.getParameter("lastName");// null
 		String emailId = request.getParameter("emailId");
 		String password = request.getParameter("password");
-		String gender= request.getParameter("gender");
-		String number=request.getParameter("number");
+		String gender = request.getParameter("gender");
+		String number = request.getParameter("number");
 
 		String fn = "[a-zA-Z]+";
 		String em = "[a-z]{2,10}.+[a-z]{2,10}[0-9]{0,4}@[gmail]{5}.[com]{3}";
@@ -45,7 +46,6 @@ public class AddHrFilter implements Filter {
 
 		} else if (firstName.trim().length() <= 2) {
 			isError = true;
-//			error.append("<br>Please Enter Atleast 2 Characters");
 			request.setAttribute("firstname", "Please Enter Atleast 2 Characters");
 		}
 
@@ -63,63 +63,55 @@ public class AddHrFilter implements Filter {
 			request.setAttribute("lastname", "Please Enter Atleast 2 Characters");
 		}
 
-		if(emailId == null || emailId.trim().length()==0)
-		{
-			isError=true;
+		if (emailId == null || emailId.trim().length() == 0) {
+			isError = true;
 //			error.append("<br> Please Enter Email id");
 			request.setAttribute("email", "Please Enter Email id");
 
-		}
-		else
-		{
-			if(emailId.matches(em)==false)
-			{
-			   isError=true;
+		} else {
+			if (emailId.matches(em) == false) {
+				isError = true;
 //			   error.append("<br>Please Enter valid Email Address");
-			   request.setAttribute("email", "Please Enter valid Email Address");
+				request.setAttribute("email", "Please Enter valid Email Address");
 
 			}
-			
+
 		}
-		if(password==null || password.trim().length()==0)
-		{
-			isError=true;
+		if (password == null || password.trim().length() == 0) {
+			isError = true;
 //			error.append("<br> Please Enter Password");
 			request.setAttribute("password", "Please Enter Password");
 
-		}
-		else 
-		{
-			if(password.matches(ps)==false)
-			{
-			isError=true;
+		} else {
+			if (password.matches(ps) == false) {
+				isError = true;
 //			error.append("<br>Please Enter valid Password");
-			   request.setAttribute("password", "Please Enter valid Password");
+				request.setAttribute("password", "Please Enter valid Password");
 
 			}
-			
+
 		}
-         if(gender==null)
-			
+		if (gender == null)
+
 		{
-			isError=true;
+			isError = true;
 //			error.append("<br> Please Enter Gender");
 			request.setAttribute("gender", "Please Enter Gender");
-			
+
 		}
-         if(number.trim().length()!=10) {
-        	 isError=true;
-        	 request.setAttribute("number", "please Enter valid contect NO");
-        			 
-         }
-         
-         HrBean bean=new HrBean();
- 		bean.setHrFirstName(firstName);
- 	    bean.setHrLastName(lastName);
- 	    bean.setHrEmail(emailId);
- 	    bean.setHrPassword(password);
- 	    bean.setHrGender(gender);
- 	    bean.setHrContact(number);
+		if (number.trim().length() != 10) {
+			isError = true;
+			request.setAttribute("number", "please Enter valid contect NO");
+
+		}
+
+		HrBean bean = new HrBean();
+		bean.setHrFirstName(firstName);
+		bean.setHrLastName(lastName);
+		bean.setHrEmail(emailId);
+		bean.setHrPassword(password);
+		bean.setHrGender(gender);
+		bean.setHrContact(number);
 
 		if (isError) {
 			request.setAttribute("user", bean);

@@ -24,7 +24,7 @@ public class adminDao {
 			pstm.setString(2, adminPass);
 			rs = pstm.executeQuery();
 
-		   if(rs.next()) {
+			if (rs.next()) {
 				abean = new adminBean();
 				abean.setAdminName(rs.getString("adminName"));
 				abean.setAdminEmail(rs.getString("adminEmail"));
@@ -35,54 +35,54 @@ public class adminDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
 				con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}}
-		
+			}
+		}
+
 		return abean;
 	}
 
 	public void addHr(HrBean Hbean) {
-		Connection con=null;
-		
-        
-		try {
-			//store into database 
-			con =dbConnection.getConnection();
-			
+		Connection con = null;
 
-			//sql 
-			//Statement
-			//PreparedStatement
-			//CallableStatement 
-			PreparedStatement pstm = con.prepareStatement("insert into Hr(hrFirstName,hrLastName,hrEmail,hrPassword,hrGender,hrContact,hrJoinDate) values (?,?,?,?,?,?,?) ");
-			pstm.setString(1,Hbean.getHrFirstName());
+		try {
+			// store into database
+			con = dbConnection.getConnection();
+
+			// sql
+			// Statement
+			// PreparedStatement
+			// CallableStatement
+			PreparedStatement pstm = con.prepareStatement(
+					"insert into Hr(hrFirstName,hrLastName,hrEmail,hrPassword,hrGender,hrContact,hrJoinDate) values (?,?,?,?,?,?,?) ");
+			pstm.setString(1, Hbean.getHrFirstName());
 			pstm.setString(2, Hbean.getHrLastName());
 			pstm.setString(3, Hbean.getHrEmail());
 			pstm.setString(4, Hbean.getHrPassword());
 			pstm.setString(5, Hbean.getHrGender());
 			pstm.setString(6, Hbean.getHrContact());
 			pstm.setString(7, Hbean.getHrJoinDate());
-			
 
-			pstm.executeUpdate(); //db -> 	1 -> inserted , updated , deleted 
-			
+			pstm.executeUpdate(); // db -> 1 -> inserted , updated , deleted
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		
-		}finally {
+
+		} finally {
 			try {
 				con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}}
-		
+			}
+		}
+
 	}
 
 	public ArrayList<HrBean> getHrList() {
@@ -166,20 +166,92 @@ public class adminDao {
 	}
 
 	public void deleteHr(Integer id) {
-		
-		Connection con=null;
+
+		Connection con = null;
+		try {
+
+			// TODO Auto-generated method stub
+			con = dbConnection.getConnection();
+			PreparedStatement pstm = con.prepareStatement("delete from Hr where hrId=?");
+
+			pstm.setInt(1, id);
+			pstm.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public HrBean getUserById(Integer userId) {
+		HrBean user = null;
+		ResultSet rs = null;
+
+		Connection con = null;
+		try {
+
+			// TODO Auto-generated method stub
+			con = dbConnection.getConnection();
+			PreparedStatement pstm = con.prepareStatement("select * from Hr where id=?");
+
+			pstm.setInt(1, userId);
+			rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				user = new HrBean();
+				user.setHrId(rs.getInt("hrId"));
+				user.setHrFirstName(rs.getString("hrFirstName"));
+				user.setHrLastName(rs.getString("hrLastName"));
+				user.setHrEmail(rs.getString("hrEmail"));
+				user.setHrPassword(rs.getString("hrPassword"));
+				user.setHrGender(rs.getString("hrGender"));
+				user.setHrContact(rs.getString("hrContact"));
+				user.setHrJoinDate(rs.getString("hrJoinDate"));
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return user;
+	}
+
+	public void UpdateUser(HrBean bean) {
+		 Connection con=null;
 		   try
 		  {
 			
 			
 			// TODO Auto-generated method stub
 			con = dbConnection.getConnection();
-			PreparedStatement pstm = con.prepareStatement("delete from Hr where hrId=?");
+			PreparedStatement pstm = con.prepareStatement("update hr set hrFirstName=?,hrLastName=?,hrEmail=?,hrPassword=?,hrGender=?,hrContact=?,hrJoinDate=? where hrId=?");
 			
-			pstm.setInt(1,id);
+			
+			pstm.setString(1,bean.getHrFirstName());
+			pstm.setString(2, bean.getHrLastName());
+			pstm.setString(3, bean.getHrEmail());
+			pstm.setString(4, bean.getHrPassword());
+			pstm.setString(5, bean.getHrGender());
+			pstm.setString(6, bean.getHrContact());
+			pstm.setString(7, bean.getHrJoinDate());
+			pstm.setInt(8,bean.getHrId());
+			
+			
 			pstm.executeUpdate();
-			
-			
+		
 		}
 		catch(Exception e)
 		{
@@ -192,6 +264,7 @@ public class adminDao {
 				e.printStackTrace();
 			}
 		}
+		
 	}
 
 }

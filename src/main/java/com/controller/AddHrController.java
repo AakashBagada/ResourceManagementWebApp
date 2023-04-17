@@ -30,6 +30,7 @@ public class AddHrController extends HttpServlet {
 		user.setHrLastName(lastName);
 		user.setHrEmail(emailId);
 		user.setHrPassword(password);
+		user.setHrGender(gender);
 		user.setHrContact(number);
 		user.setHrJoinDate(date);
 		
